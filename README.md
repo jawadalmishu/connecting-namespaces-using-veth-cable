@@ -47,13 +47,13 @@ Now open the oracle virtual box, you will see this two os.
 ## Step 2: Launching the Virtual Machine:
 1. Now we have created our virtual os. So, run the following command to start the virtual machine:
 
-```
+```ruby
 vagrant up
 ```
 
 2. Once the VM is up and running, access the command prompt within the VM by running:
 
-```
+```ruby
 vagrant ssh
 ```
 ## Step 3: Creating and Connecting Namespaces:
@@ -62,28 +62,28 @@ Now that we have our Centos VM up and running, let's proceed with creating and c
 
 1. In the VM's command prompt, run the following commands to create the namespaces:
 
-```
+```ruby
 sudo ip netns add ns1
 sudo ip netns add ns2
 ```
 
 2. Next, create a virtual Ethernet cable (Veth) that connects the namespaces:
 
-```
+```ruby
 sudo ip link set veth1 netns ns1
 sudo ip link set veth2 netns ns2
 ```
 
 3. Configure IP addresses for the Veth interfaces:
 
-```
+```ruby
 sudo ip netns exec ns1 ip addr add 10.0.0.1/24 dev veth1
 sudo ip netns exec ns2 ip addr add 10.0.0.2/24 dev veth2
 ```
 
 4. Enable the Veth interfaces:
 
-```
+```ruby
 sudo ip netns exec ns1 ip link set dev veth1 up
 sudo ip netns exec ns2 ip link set dev veth2 up
 ```
@@ -92,17 +92,17 @@ To test the connectivity, let's open two terminals, one for each namespace:
 
 
 Terminal 1 (for ns1):
-```
+```ruby
 sudo ip netns exec ns1 bash
 ```
 
 Terminal 2 (for ns2):
-```
+```ruby
 sudo ip netns exec ns2 bash
 ```
 
 In Terminal 1 (ns1), you can now ping the IP address of veth2 in ns2:
-```
+```ruby
 ping 10.0.0.2
 ```
 
