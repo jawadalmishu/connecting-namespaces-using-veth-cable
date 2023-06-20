@@ -67,7 +67,13 @@ sudo ip netns add ns1
 sudo ip netns add ns2
 ```
 
-2. Next, create a virtual Ethernet cable (Veth) that connects the namespaces:
+2. Next, Create a veth cable with two interface veth1 and veth2:
+
+```ruby
+sudo ip link add veth1 type veth peer name veth2
+```
+
+2. Next, connect veth1 interface to ns1 namespace and veth2 interface to ns2 namespace:
 
 ```ruby
 sudo ip link set veth1 netns ns1
